@@ -1,13 +1,108 @@
 <!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Salon de Coiffure Pepita</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="brand"><span class="logo">🐾</span><span class="brand-text">Salon&nbsp;de&nbsp;Coiffure&nbsp;Pepita</span></a>
+    <nav class="nav">
+      <a href="#dienstleistungen">Dienstleistungen</a>
+      <a href="#kontakt">Kontakt</a>
+      <a class="btn primary" href="sizes.html">Buchung</a>
+    </nav>
+    <button class="burger" aria-label="Menü öffnen" onclick="document.body.classList.toggle('nav-open')">☰</button>
+  </div>
+</header>
 
-<html>
-    <head>
- <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
-        
-    </body>
+<main>
+  <section class="hero">
+    <div class="container hero-inner">
+      <h1>Wir lieben Ihren Hund so sehr wie Sie</h1>
+      <p>Sanfte Pflege, modernes Equipment und viel Herz – für einen entspannten Grooming-Termin.</p>
+      <div class="cta">
+        <a class="btn ghost" href="#dienstleistungen">Leistungen ansehen</a>
+        <a class="btn primary" href="sizes.html">Termin buchen</a>
+      </div>
+    </div>
+  </section>
 
+  <section id="dienstleistungen" class="section">
+    <div class="container">
+      <h2>Dienstleistungen</h2>
+      <p class="section-intro">Preise variieren je nach Fellzustand und Größe.</p>
+
+      <div class="grid cards">
+        <article class="card">
+          <h3>Basis-Pflege</h3>
+          <ul><li>Bad &amp; Föhnen</li><li>Bürsten &amp; Entfilzen leicht</li><li>Krallen kürzen</li><li>Ohrenpflege</li></ul>
+          <div class="price">ab 59 CHF</div>
+          <div class="actions"><a class="btn" href="sizes.html?service=Basis-Pflege">Größe wählen</a></div>
+        </article>
+
+        <article class="card">
+          <h3>Komplettschnitt</h3>
+          <ul><li>Alles aus Basis-Pflege</li><li>Schneiden/Trimmen nach Rasse oder Wunsch</li><li>Pfoten &amp; Hygiene-Schnitt</li></ul>
+          <div class="price">ab 89 CHF</div>
+          <div class="actions"><a class="btn" href="sizes.html?service=Komplettschnitt">Größe wählen</a></div>
+        </article>
+
+        <article class="card">
+          <h3>Zusatzleistungen</h3>
+          <ul><li>Zahnreinigung sanft</li><li>Unterwolle entfernen</li><li>Zeckenservice</li><li>Katzenpflege auf Anfrage</li></ul>
+          <div class="price">+ 10–40 CHF</div>
+          <div class="actions"><a class="btn" href="sizes.html?service=Zusatzleistung">Größe wählen</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt" class="section alt">
+    <div class="container">
+      <h2>Kontakt</h2>
+      <div class="grid contact-grid">
+        <div>
+          <p><strong>Salon de Coiffure Pepita</strong></p>
+          <p><strong>Adresse</strong><br>Zugerstrasse 90<br>8810 Horgen</p>
+          <p><strong>Öffnungszeiten</strong><br>Mo–Fr: 09:00–18:00<br>Sa: 10:00–14:00</p>
+          <p><strong>Telefon:</strong> <a href="tel:+41767740822">076 774 08 22</a><br>
+             <strong>E-Mail:</strong> <a href="mailto:coiffeur.pepita@gmail.com">coiffeur.pepita@gmail.com</a></p>
+          <div class="cta">
+            <a class="btn ghost" href="https://wa.me/41767740822" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="btn" href="https://instagram.com/SALON_DE-COIFFURE_PEPITA" target="_blank" rel="noopener">Instagram</a>
+            <a class="btn ghost" href="https://facebook.com/salondecoiffure.pepita" target="_blank" rel="noopener">Facebook</a>
+            <a class="btn" href="sizes.html">Termin buchen</a>
+          </div>
+        </div>
+        <div class="map-wrap">
+          <iframe class="map" title="Karte" loading="lazy"
+            src="https://www.google.com/maps?q=Zugerstrasse%2090%2C%208810%20Horgen&output=embed"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+  <footer class="site-footer">
+
+    <div class="disclaimer">
+      <p style="margin-top:12px"><strong>Bei Fragen melden Sie sich bei:</strong> 
+        <a href="mailto:coiffeur.pepita@gmail.com">coiffeur.pepita@gmail.com</a>
+      <p>*Um eine sichere und gesunde Umgebung zu schaffen, verlangen wir von allen Haustieren, die zur Pflege kommen, dass sie alle Impfungen auf dem neuesten Stand haben.</p>
+      <p>*Alle Hunde müssen gesund sein.</p>
+      <p>*Wir behalten uns das Recht vor, eine Dienstleistung aufgrund des Alters, der Gesundheit oder des Temperaments des Tieres abzulehnen oder einzustellen.</p>
+      <p>*Wir informieren Sie, dass die im Salon aufgenommenen Fotos in unseren sozialen Netzwerken verwendet werden können. Die Bilder werden verwendet, um den Service und die Ergebnisse zu zeigen. Wenn Sie nicht wollen, dass Ihre Fotos erscheinen, kontaktieren Sie uns bitte, danke.</p>
+      </p>
+    </div>
+  </footer>
+
+
+<script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+</body>
 </html>
-
-<!-- Just the start -->

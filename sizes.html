@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Größe wählen – Salon de Coiffure Pepita</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="brand"><span class="logo">🐾</span><span class="brand-text">Salon&nbsp;de&nbsp;Coiffure&nbsp;Pepita</span></a>
+    <nav class="nav">
+      <a href="index.html#dienstleistungen">Dienstleistungen</a>
+      <a href="index.html#kontakt">Kontakt</a>
+    </nav>
+    <button class="burger" aria-label="Menü öffnen" onclick="document.body.classList.toggle('nav-open')">☰</button>
+  </div>
+</header>
+
+<main class="section">
+  <div class="container">
+    <div class="stepper">
+      <a class="step" href="index.html">1 Leistungen</a>
+      <span class="step active">2 Größe wählen</span>
+      <span class="step">3 Termin buchen</span>
+    </div>
+
+    <h1>Größe wählen</h1>
+    <p class="section-intro">Wähle Service und Hundegröße. Wir leiten dich mit dem passenden Preis zum Buchungsformular weiter.</p>
+
+    <label>Service
+      <select id="serviceSelect">
+        <option>Basis-Pflege</option>
+        <option>Komplettschnitt</option>
+        <option>Zusatzleistung</option>
+      </select>
+    </label>
+
+    <div class="grid cards" style="margin-top:16px">
+      <article class="card"><h3>Klein</h3><p>≤ 10 kg / &lt; 35 cm</p>
+        <div class="actions"><button class="btn primary" onclick="go('Klein')">Weiter</button></div>
+      </article>
+      <article class="card"><h3>Mittel</h3><p>10–25 kg / 35–55 cm</p>
+        <div class="actions"><button class="btn primary" onclick="go('Mittel')">Weiter</button></div>
+      </article>
+      <article class="card"><h3>Groß</h3><p>&gt; 25 kg / &gt; 55 cm</p>
+        <div class="actions"><button class="btn primary" onclick="go('Groß')">Weiter</button></div>
+      </article>
+    </div>
+
+    <p class="section-intro" style="margin-top:12px;color:#6b7280">
+      Richtwerte – endgültiger Preis kann je nach Fellzustand variieren.
+    </p>
+  </div>
+</main>
+
+<script>
+  const PRICES = {
+    "Basis-Pflege":    { "Klein": 59,  "Mittel": 79,  "Groß": 99  },
+    "Komplettschnitt": { "Klein": 89,  "Mittel": 109, "Groß": 139 },
+    "Zusatzleistung":  { "Klein": 10,  "Mittel": 25,  "Groß": 40  }
+  };
+
+  const params = new URLSearchParams(location.search);
+  const s = params.get('service');
+  const sel = document.getElementById('serviceSelect');
+  if (s) [...sel.options].forEach(o => { if (o.text === s) sel.value = o.text; });
+
+  function go(size){
+    const service = sel.value;
+    const price = PRICES[service][size];
+    const url = new URL('booking.html', location.href);
+    url.searchParams.set('service', service);
+    url.searchParams.set('size', size);
+    url.searchParams.set('price', price);
+    location.href = url.toString();
+  }
+</script>
+</body>
+</html>
