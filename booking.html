@@ -9,6 +9,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<div class="top-logo">
+  <a href="index.html" class="brand-center" aria-label="Startseite">
+    <img src="logo.jpg" alt="Hunde Coiffeur Pepita – Logo" class="logo-center-img">
+  </a>
+</div>
+
 <header class="site-header">
   <div class="container header-inner">
     <a href="index.html" class="brand"><span class="logo">🐾</span><span class="brand-text">Salon&nbsp;de&nbsp;Coiffure&nbsp;Pepita</span></a>
@@ -38,13 +45,12 @@
       <span id="sumPrice">Preis: – CHF</span>
     </div>
 
-    <!-- SENDEN OHNE OUTLOOK: formsubmit.co -->
-    <form id="booking-form" class="form" action="https://formsubmit.co/testpizza919@gmail.com" method="POST">
-      <!-- formsubmit extras -->
-      <input type="hidden" name="_subject" value="Neue Termin-Anfrage">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_next" value="index.html#danke">
+    <!-- NETLIFY FORM -->
+    <form name="buchung" method="POST" data-netlify="true" enctype="multipart/form-data">
+      <input type="hidden" name="form-name" value="buchung">
+      <input type="hidden" id="service" name="service">
+      <input type="hidden" id="size" name="size">
+      <input type="hidden" id="price" name="price">
 
       <div class="grid form-grid">
         <label>Ihr Name
@@ -59,43 +65,38 @@
         <label>Tier / Rasse
           <input required type="text" name="pet" placeholder="z. B. Pomeranian">
         </label>
-        <label>Service
-          <input id="service" name="service" readonly>
+
+        <!-- echter Datei-Upload -->
+        <label>Foto des Hundes (Pflicht)
+          <input required type="file" name="hund_foto" accept="image/*">
         </label>
-        <label>Grösse
-          <input id="size" name="size" readonly>
-        </label>
-        <label>Preis (Richtwert)
-          <input id="price" name="price" readonly>
-        </label>
+
         <label>Wunschtermin
           <input type="date" name="date">
         </label>
       </div>
+
       <label>Nachricht (optional)
         <textarea name="message" rows="5" placeholder="Besondere Hinweise (Fellzustand, Allergien, etc.)"></textarea>
       </label>
+
       <div class="form-actions">
         <button class="btn primary" type="submit">Anfrage senden</button>
       </div>
-      <p class="form-note">Mit dem Absenden stimmen Sie unserer <a href="#" onclick="alert('Hier kannst du später deine Datenschutzseite verlinken.'); return false;">Datenschutzerklärung</a> zu.</p>
+      <p class="form-note">Mit dem Absenden stimmen Sie unserer Datenschutzhinweis zu.</p>
     </form>
   </div>
 </main>
 
 <script>
   const p = new URLSearchParams(location.search);
-  const service = p.get('service') || 'Basis-Pflege';
-  const size = p.get('size') || 'Klein';
-  const price = p.get('price') || '–';
+  document.getElementById('service').value = p.get('service') || 'Basis-Pflege';
+  document.getElementById('size').value = p.get('size') || 'Klein';
+  document.getElementById('price').value = (p.get('price') || '–') + ' CHF';
 
-  document.getElementById('service').value = service;
-  document.getElementById('size').value = size;
-  document.getElementById('price').value = price + ' CHF';
-
-  document.getElementById('sumService').textContent = 'Service: ' + service;
-  document.getElementById('sumSize').textContent = 'Grösse: ' + size;
-  document.getElementById('sumPrice').textContent = 'Preis: ' + price + ' CHF';
+  document.getElementById('sumService').textContent = 'Service: ' + (p.get('service') || 'Basis-Pflege');
+  document.getElementById('sumSize').textContent = 'Grösse: ' + (p.get('size') || 'Klein');
+  document.getElementById('sumPrice').textContent = 'Preis: ' + (p.get('price') || '–') + ' CHF';
 </script>
 </body>
 </html>
