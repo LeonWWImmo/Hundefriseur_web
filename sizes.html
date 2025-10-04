@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Größe wählen – Salon de Coiffure Pepita</title>
+  <title>Grösse wählen – Salon de Coiffure Pepita</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -24,12 +24,12 @@
   <div class="container">
     <div class="stepper">
       <a class="step" href="index.html">1 Leistungen</a>
-      <span class="step active">2 Größe wählen</span>
+      <span class="step active">2 Grösse wählen</span>
       <span class="step">3 Termin buchen</span>
     </div>
 
-    <h1>Größe wählen</h1>
-    <p class="section-intro">Wähle Service und Hundegröße. Wir leiten dich mit dem passenden Preis zum Buchungsformular weiter.</p>
+    <h1>Grösse wählen</h1>
+    <p class="section-intro">Wähle Service und Hundegrösse. Wir leiten dich mit dem passenden Preis zum Buchungsformular weiter.</p>
 
     <label>Service
       <select id="serviceSelect">
@@ -46,8 +46,8 @@
       <article class="card"><h3>Mittel</h3><p>10–25 kg / 35–55 cm</p>
         <div class="actions"><button class="btn primary" onclick="go('Mittel')">Weiter</button></div>
       </article>
-      <article class="card"><h3>Groß</h3><p>&gt; 25 kg / &gt; 55 cm</p>
-        <div class="actions"><button class="btn primary" onclick="go('Groß')">Weiter</button></div>
+      <article class="card"><h3>Gross</h3><p>&gt; 25 kg / &gt; 55 cm</p>
+        <div class="actions"><button class="btn primary" onclick="go('Gross')">Weiter</button></div>
       </article>
     </div>
 
@@ -59,9 +59,9 @@
 
 <script>
   const PRICES = {
-    "Basis-Pflege":    { "Klein": 59,  "Mittel": 79,  "Groß": 99  },
-    "Komplettschnitt": { "Klein": 89,  "Mittel": 109, "Groß": 139 },
-    "Zusatzleistung":  { "Klein": 10,  "Mittel": 25,  "Groß": 40  }
+    "Basis-Pflege":    { "Klein": 59,  "Mittel": 79,  "Gross": 99  },
+    "Komplettschnitt": { "Klein": 89,  "Mittel": 109, "Gross": 139 },
+    "Zusatzleistung":  { "Klein": 10,  "Mittel": 25,  "Gross": 40  }
   };
 
   const params = new URLSearchParams(location.search);

@@ -14,7 +14,7 @@
     <a href="index.html" class="brand"><span class="logo">🐾</span><span class="brand-text">Salon&nbsp;de&nbsp;Coiffure&nbsp;Pepita</span></a>
     <nav class="nav">
       <a href="index.html#dienstleistungen">Dienstleistungen</a>
-      <a href="sizes.html">Größe ändern</a>
+      <a href="sizes.html">Grösse ändern</a>
       <a href="index.html#kontakt">Kontakt</a>
     </nav>
     <button class="burger" aria-label="Menü öffnen" onclick="document.body.classList.toggle('nav-open')">☰</button>
@@ -25,16 +25,16 @@
   <div class="container">
     <div class="stepper">
       <a class="step" href="index.html">1 Leistungen</a>
-      <a class="step" href="sizes.html">2 Größe wählen</a>
+      <a class="step" href="sizes.html">2 Grösse wählen</a>
       <span class="step active">3 Termin buchen</span>
     </div>
 
     <h1>Termin buchen</h1>
-    <p class="section-intro">Service, Größe und Preis wurden übernommen. <strong>Zahlungen nur vor Ort an der Kasse.</strong></p>
+    <p class="section-intro">Service, Grösse und Preis wurden übernommen. <strong>Zahlungen nur vor Ort an der Kasse.</strong></p>
 
     <div id="summary" class="card" style="margin-bottom:16px">
       <strong id="sumService">Service: –</strong><br>
-      <span id="sumSize">Größe: –</span><br>
+      <span id="sumSize">Grösse: –</span><br>
       <span id="sumPrice">Preis: – CHF</span>
     </div>
 
@@ -62,7 +62,7 @@
         <label>Service
           <input id="service" name="service" readonly>
         </label>
-        <label>Größe
+        <label>Grösse
           <input id="size" name="size" readonly>
         </label>
         <label>Preis (Richtwert)
@@ -94,7 +94,7 @@
   document.getElementById('price').value = price + ' CHF';
 
   document.getElementById('sumService').textContent = 'Service: ' + service;
-  document.getElementById('sumSize').textContent = 'Größe: ' + size;
+  document.getElementById('sumSize').textContent = 'Grösse: ' + size;
   document.getElementById('sumPrice').textContent = 'Preis: ' + price + ' CHF';
 </script>
 </body>
