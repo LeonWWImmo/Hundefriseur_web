@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Termin buchen – Salon de Coiffure Pepita</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
+<!-- Logo oben -->
 <div class="top-logo">
   <a href="index.html" class="brand-center" aria-label="Startseite">
     <img src="logo.jpg" alt="Hunde Coiffeur Pepita – Logo" class="logo-center-img">
@@ -18,7 +20,10 @@
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href="index.html" class="brand"><span class="logo">🐾</span><span class="brand-text">Salon&nbsp;de&nbsp;Coiffure&nbsp;Pepita</span></a>
+    <a href="index.html" class="brand">
+      <span class="logo">🐾</span>
+      <span class="brand-text">Salon&nbsp;de&nbsp;Coiffure&nbsp;Pepita</span>
+    </a>
     <nav class="nav">
       <a href="index.html#dienstleistungen">Dienstleistungen</a>
       <a href="sizes.html">Grösse ändern</a>
@@ -30,6 +35,7 @@
 
 <main class="section">
   <div class="container">
+
     <div class="stepper">
       <a class="step" href="index.html">1 Leistungen</a>
       <a class="step" href="sizes.html">2 Grösse wählen</a>
@@ -37,7 +43,10 @@
     </div>
 
     <h1>Termin buchen</h1>
-    <p class="section-intro">Service, Grösse und Preis wurden übernommen. <strong>Zahlungen nur vor Ort an der Kasse.</strong></p>
+    <p class="section-intro">
+      Service, Grösse und Preis wurden übernommen.
+      <strong>Zahlungen nur vor Ort an der Kasse.</strong>
+    </p>
 
     <div id="summary" class="card" style="margin-bottom:16px">
       <strong id="sumService">Service: –</strong><br>
@@ -45,9 +54,12 @@
       <span id="sumPrice">Preis: – CHF</span>
     </div>
 
-    <!-- NETLIFY FORM -->
+    <!-- NETLIFY-FORMULAR -->
     <form name="buchung" method="POST" data-netlify="true" enctype="multipart/form-data">
+      <!-- Netlify-Erkennung -->
       <input type="hidden" name="form-name" value="buchung">
+
+      <!-- Übergabefelder von sizes.html -->
       <input type="hidden" id="service" name="service">
       <input type="hidden" id="size" name="size">
       <input type="hidden" id="price" name="price">
@@ -66,7 +78,6 @@
           <input required type="text" name="pet" placeholder="z. B. Pomeranian">
         </label>
 
-        <!-- echter Datei-Upload -->
         <label>Foto des Hundes (Pflicht)
           <input required type="file" name="hund_foto" accept="image/*">
         </label>
@@ -83,20 +94,37 @@
       <div class="form-actions">
         <button class="btn primary" type="submit">Anfrage senden</button>
       </div>
-      <p class="form-note">Mit dem Absenden stimmen Sie unserer Datenschutzhinweis zu.</p>
+
+      <p class="form-note">
+        Mit dem Absenden stimmen Sie unserer Datenschutzhinweis zu.
+      </p>
     </form>
   </div>
 </main>
 
 <script>
+  // Werte aus URL übernehmen
   const p = new URLSearchParams(location.search);
-  document.getElementById('service').value = p.get('service') || 'Basis-Pflege';
-  document.getElementById('size').value = p.get('size') || 'Klein';
-  document.getElementById('price').value = (p.get('price') || '–') + ' CHF';
+  const service = p.get('service') || 'Basis-Pflege';
+  const size = p.get('size') || 'Klein';
+  const price = p.get('price') || '–';
 
-  document.getElementById('sumService').textContent = 'Service: ' + (p.get('service') || 'Basis-Pflege');
-  document.getElementById('sumSize').textContent = 'Grösse: ' + (p.get('size') || 'Klein');
-  document.getElementById('sumPrice').textContent = 'Preis: ' + (p.get('price') || '–') + ' CHF';
+  // Hidden-Felder füllen
+  document.getElementById('service').value = service;
+  document.getElementById('size').value = size;
+  document.getElementById('price').value = price + ' CHF';
+
+  // Zusammenfassung aktualisieren
+  document.getElementById('sumService').textContent = 'Service: ' + service;
+  document.getElementById('sumSize').textContent = 'Grösse: ' + size;
+  document.getElementById('sumPrice').textContent = 'Preis: ' + price + ' CHF';
 </script>
+
+<!-- Dummy-Formular für Netlify-Erkennung (verhindert 405 bei Erst-Deploy) -->
+<form name="buchung" netlify hidden>
+  <input type="text" name="name">
+  <input type="email" name="email">
+</form>
+
 </body>
 </html>
