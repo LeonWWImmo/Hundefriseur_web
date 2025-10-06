@@ -11,13 +11,7 @@
 </head>
 <body>
 
-<!-- Logo oben -->
-<div class="top-logo">
-  <a href="index.html" class="brand-center" aria-label="Startseite">
-    <img src="logo.jpg" alt="Hunde Coiffeur Pepita – Logo" class="logo-center-img">
-  </a>
-</div>
-
+<!-- HEADER -->
 <header class="site-header">
   <div class="container header-inner">
     <a href="index.html" class="brand">
@@ -33,9 +27,9 @@
   </div>
 </header>
 
+<!-- MAIN -->
 <main class="section">
   <div class="container">
-
     <div class="stepper">
       <a class="step" href="index.html">1 Leistungen</a>
       <a class="step" href="sizes.html">2 Grösse wählen</a>
@@ -44,25 +38,26 @@
 
     <h1>Termin buchen</h1>
     <p class="section-intro">
-      Service, Grösse und Preis wurden übernommen.
-      <strong>Zahlungen nur vor Ort an der Kasse.</strong>
+      Service, Grösse und Preis wurden übernommen. <strong>Zahlungen nur vor Ort an der Kasse.</strong>
     </p>
 
+    <!-- Zusammenfassung -->
     <div id="summary" class="card" style="margin-bottom:16px">
       <strong id="sumService">Service: –</strong><br>
       <span id="sumSize">Grösse: –</span><br>
       <span id="sumPrice">Preis: – CHF</span>
     </div>
 
-    <!-- NETLIFY-FORMULAR -->
-    <form name="buchung" method="POST" data-netlify="true" enctype="multipart/form-data">
-      <!-- Netlify-Erkennung -->
-      <input type="hidden" name="form-name" value="buchung">
+    <!-- FORMULAR -->
+    <form id="booking-form" class="form" 
+      action="https://formsubmit.co/leon.neuhaus@gmx.net"
+      method="POST">
 
-      <!-- Übergabefelder von sizes.html -->
-      <input type="hidden" id="service" name="service">
-      <input type="hidden" id="size" name="size">
-      <input type="hidden" id="price" name="price">
+      <!-- FormSubmit Konfiguration -->
+      <input type="hidden" name="_subject" value="Neue Termin-Anfrage von der Website">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://leonwwimmo.github.io/Hundefriseur_web/danke.html">
 
       <div class="grid form-grid">
         <label>Ihr Name
@@ -71,17 +66,21 @@
         <label>E-Mail
           <input required type="email" name="email" placeholder="name@example.com">
         </label>
-        <label>Telefon (optional)
-          <input type="tel" name="phone" placeholder="+41 …">
+        <label>Telefon 
+          <input required type="phone" placeholder="+41 …">
         </label>
         <label>Tier / Rasse
           <input required type="text" name="pet" placeholder="z. B. Pomeranian">
         </label>
-
-        <label>Foto des Hundes (Pflicht)
-          <input required type="file" name="hund_foto" accept="image/*">
+        <label>Service
+          <input id="service" name="service" readonly>
         </label>
-
+        <label>Grösse
+          <input id="size" name="size" readonly>
+        </label>
+        <label>Preis (Richtwert)
+          <input id="price" name="price" readonly>
+        </label>
         <label>Wunschtermin
           <input type="date" name="date">
         </label>
@@ -96,35 +95,30 @@
       </div>
 
       <p class="form-note">
-        Mit dem Absenden stimmen Sie unserer Datenschutzhinweis zu.
+        Mit dem Absenden stimmen Sie unserer 
+        <a href="#" onclick="alert('Hier kannst du später deine Datenschutzseite verlinken.'); return false;">
+          Datenschutzerklärung
+        </a> zu.
       </p>
     </form>
   </div>
 </main>
 
+<!-- SCRIPT -->
 <script>
-  // Werte aus URL übernehmen
   const p = new URLSearchParams(location.search);
   const service = p.get('service') || 'Basis-Pflege';
   const size = p.get('size') || 'Klein';
   const price = p.get('price') || '–';
 
-  // Hidden-Felder füllen
   document.getElementById('service').value = service;
   document.getElementById('size').value = size;
   document.getElementById('price').value = price + ' CHF';
 
-  // Zusammenfassung aktualisieren
   document.getElementById('sumService').textContent = 'Service: ' + service;
   document.getElementById('sumSize').textContent = 'Grösse: ' + size;
   document.getElementById('sumPrice').textContent = 'Preis: ' + price + ' CHF';
 </script>
-
-<!-- Dummy-Formular für Netlify-Erkennung (verhindert 405 bei Erst-Deploy) -->
-<form name="buchung" netlify hidden>
-  <input type="text" name="name">
-  <input type="email" name="email">
-</form>
 
 </body>
 </html>

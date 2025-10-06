@@ -82,3 +82,77 @@ input:focus,select:focus,textarea:focus{border-color:var(--brand);box-shadow:0 0
   font-weight: 600;
   color: var(--brand);
 }
+
+/* Header-Logo mittig platzieren */
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.center-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.center-logo img {
+  height: 100px;
+  width: auto;
+  display: block;
+}
+
+@media (max-width: 840px) {
+  .center-logo {
+    position: static;
+    transform: none;
+    margin: 0 auto;
+    order: -1;
+  }
+  .center-logo img {
+    height: 50px;
+  }
+}
+
+/* ===== HERO mit zwei Bildern ===== */
+.hero-double {
+  position: relative;
+  min-height: 68vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+.hero-double .hero-images {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.hero-double .hero-img {
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(70%);
+}
+
+.hero-double::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
