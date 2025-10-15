@@ -18,6 +18,9 @@
       <span class="logo">🐾</span>
       <span class="brand-text">Salon&nbsp;de&nbsp;Coiffure&nbsp;Pepita</span>
     </a>
+    <a href="index.html" class="center-logo">
+      <img src="Pictures/logo-no-backgorund.png" alt="Logo Hunde Coiffeur Pepita" />
+    </a>
     <nav class="nav">
       <a href="index.html#dienstleistungen">Dienstleistungen</a>
       <a href="sizes.html">Grösse ändern</a>
@@ -57,7 +60,7 @@
       <input type="hidden" name="_subject" value="Neue Termin-Anfrage von der Website">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_next" value="https://leonwwimmo.github.io/Hundefriseur_web/danke.html">
+      <input type="hidden" name="_next" value="danke.html">
 
       <div class="grid form-grid">
         <label>Ihr Name
@@ -82,8 +85,9 @@
           <input id="price" name="price" readonly>
         </label>
         <label>Wunschtermin
-          <input type="date" name="date">
+          <input type="datetime-local" name="date" required>
         </label>
+
       </div>
 
       <label>Nachricht (optional)
@@ -107,7 +111,7 @@
 <!-- SCRIPT -->
 <script>
   const p = new URLSearchParams(location.search);
-  const service = p.get('service') || 'Basis-Pflege';
+  const service = p.get('service') || 'Ganzer-Service';
   const size = p.get('size') || 'Klein';
   const price = p.get('price') || '–';
 

@@ -10,7 +10,14 @@
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href="index.html" class="brand"><span class="brand-text">Salon&nbsp;de&nbsp;Coiffure&nbsp;Pepita</span></a>
+    
+    <a href="index.html" class="brand">
+      <span class="logo">🐾</span>
+      <span class="brand-text">Salon&nbsp;de&nbsp;Coiffure&nbsp;Pepita</span>
+    </a>
+    <a href="index.html" class="center-logo">
+      <img src="Pictures/logo-no-backgorund.png" alt="Logo Hunde Coiffeur Pepita" />
+    </a>
     <a href="index.html" class="center-logo"><img src="logo.jpg" alt="Logo" /></a>
     <nav class="nav">
       <a href="index.html#dienstleistungen">Dienstleistungen</a>
@@ -26,8 +33,8 @@
 
     <label>Service
       <select id="serviceSelect">
-        <option>Basis-Pflege</option>
-        <option>Komplettschnitt</option>
+        <option>Ganzer-Service</option>
+        <option>Waschen & Föhnen</option>
         <option>Zusatzleistung</option>
       </select>
     </label>
@@ -42,8 +49,8 @@
 
 <script>
   const PRICES = {
-    "Basis-Pflege":    { "Klein": 59,  "Mittel": 79,  "Gross": 99  },
-    "Komplettschnitt": { "Klein": 89,  "Mittel": 109, "Gross": 139 },
+    "Ganzer-Service":    { "Klein": 59,  "Mittel": 79,  "Gross": 99  },
+    "Waschen & Föhnen": { "Klein": 89,  "Mittel": 109, "Gross": 139 },
     "Zusatzleistung":  { "Klein": 10,  "Mittel": 25,  "Gross": 40  }
   };
   function go(size){
