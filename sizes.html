@@ -29,34 +29,66 @@
     <h1>Grösse wählen</h1>
     <p class="section-intro">Wähle Service und Hundegrösse.</p>
 
+    <!-- Anzeige des aktuell gewählten Services -->
+    <div id="currentService" style="font-weight:600; margin-bottom:10px;"></div>
+
     <label>Service
       <select id="serviceSelect">
-        <option>Ganzer-Service</option>
-        <option>Waschen & Föhnen</option>
-        <option>Zusatzleistung</option>
+        <option value="Ganzer-Service">Ganzer-Service</option>
+        <option value="Waschen & Föhnen">Waschen & Föhnen</option>
+        <option value="Zusatzleistung">Zusatzleistung</option>
       </select>
     </label>
 
     <div class="grid cards" style="margin-top:16px">
-      <article class="card"><h3>Klein</h3><p>≤ 10 kg / &lt; 35 cm</p><div class="actions"><button class="btn primary" onclick="go('Klein')">Weiter</button></div></article>
-      <article class="card"><h3>Mittel</h3><p>10–25 kg / 35–55 cm</p><div class="actions"><button class="btn primary" onclick="go('Mittel')">Weiter</button></div></article>
-      <article class="card"><h3>Gross</h3><p>&gt; 25 kg / &gt; 55 cm</p><div class="actions"><button class="btn primary" onclick="go('Gross')">Weiter</button></div></article>
+      <article class="card">
+        <h3>Klein</h3>
+        <p>≤ 10 kg / &lt; 35 cm</p>
+        <div class="actions"><button class="btn primary" onclick="go('Klein')">Weiter</button></div>
+      </article>
+
+      <article class="card">
+        <h3>Mittel</h3>
+        <p>10 – 25 kg / 35 – 55 cm</p>
+        <div class="actions"><button class="btn primary" onclick="go('Mittel')">Weiter</button></div>
+      </article>
+
+      <article class="card">
+        <h3>Gross</h3>
+        <p>&gt; 25 kg / &gt; 55 cm</p>
+        <div class="actions"><button class="btn primary" onclick="go('Gross')">Weiter</button></div>
+      </article>
     </div>
   </div>
 </main>
 
 <script>
   const PRICES = {
-    "Ganzer-Service":    { "Klein": 80,  "Mittel": 80,  "Gross": 80 },
-    "Waschen & Föhnen": { "Klein": 55,  "Mittel": 70,  "Gross": 80 },
-    "Zusatzleistung":   { "Klein": 10,  "Mittel": 25,  "Gross": 40 }
+    "Ganzer-Service":    { "Klein": 80, "Mittel": 80, "Gross": 80 },
+    "Waschen & Föhnen": { "Klein": 55, "Mittel": 70, "Gross": 80 },
+    "Zusatzleistung":   { "Klein": 10, "Mittel": 25, "Gross": 40 }
   };
 
-  function go(size){
-    const service = document.getElementById('serviceSelect').value;
+  // --- Automatische Vorauswahl aus URL ---
+  const params = new URLSearchParams(window.location.search);
+  const preselected = decodeURIComponent(params.get("service") || "Ganzer-Service"); // decode & etc.
+
+  const select = document.getElementById("serviceSelect");
+  const currentDisplay = document.getElementById("currentService");
+
+  // Dropdown setzen + Anzeige aktualisieren
+  select.value = preselected;
+  currentDisplay.textContent = "Aktuell gewählter Service: " + preselected;
+
+  // Falls kein exakter Match (Sonderzeichen-Fehler), fallback auf ersten Eintrag
+  if (!PRICES[select.value]) select.value = "Ganzer-Service";
+
+  function go(size) {
+    const service = select.value;
     const price = PRICES[service][size];
-    location.href = `booking.html?service=${service}&size=${size}&price=${price}`;
+    window.location.href = `booking.html?service=${encodeURIComponent(service)}&size=${size}&price=${price}`;
   }
 </script>
+
 </body>
 </html>

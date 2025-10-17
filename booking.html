@@ -11,7 +11,6 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="site-header">
   <div class="container header-inner">
     <a href="index.html" class="brand">
@@ -30,7 +29,6 @@
   </div>
 </header>
 
-<!-- MAIN -->
 <main class="section">
   <div class="container">
     <div class="stepper">
@@ -44,26 +42,22 @@
       Service, Grösse und Preis wurden übernommen. <strong>Zahlungen nur vor Ort an der Kasse.</strong>
     </p>
 
-    <!-- Zusammenfassung -->
     <div id="summary" class="card" style="margin-bottom:16px">
       <strong id="sumService">Service: –</strong><br>
       <span id="sumSize">Grösse: –</span><br>
       <span id="sumPrice">Preis: – CHF</span>
     </div>
 
-    <!-- FORMULAR -->
     <form id="booking-form" class="form" 
       action="https://formsubmit.co/leon.neuhaus@gmx.net"
       method="POST">
 
-      <!-- FormSubmit Einstellungen -->
       <input type="hidden" name="_subject" value="🐾 Neue Termin-Anfrage – Salon de Coiffure Pepita">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_next" value="https://pepita-hundecoiffeur.ch/danke.html">
       <input type="hidden" name="_format" value="html">
 
-      <!-- Eingabefelder -->
       <div class="grid form-grid">
         <label>Ihr Name
           <input required type="text" name="name" placeholder="Vor- und Nachname">
@@ -87,7 +81,7 @@
           <input id="price" name="price" readonly>
         </label>
         <label>Wunschtermin
-          <input type="datetime-local" name="date" required>
+          <input type="datetime-local" id="dateInput" name="date" required>
         </label>
       </div>
 
@@ -109,20 +103,25 @@
   </div>
 </main>
 
-<!-- SCRIPT -->
 <script>
+  // Werte aus URL übernehmen
   const p = new URLSearchParams(location.search);
-  const service = p.get('service') || 'Ganzer-Service';
+  const service = decodeURIComponent(p.get('service') || 'Ganzer-Service');
   const size = p.get('size') || 'Klein';
   const price = p.get('price') || '–';
 
   document.getElementById('service').value = service;
   document.getElementById('size').value = size;
   document.getElementById('price').value = price + ' CHF';
-
   document.getElementById('sumService').textContent = 'Service: ' + service;
   document.getElementById('sumSize').textContent = 'Grösse: ' + size;
   document.getElementById('sumPrice').textContent = 'Preis: ' + price + ' CHF';
+
+  // 🗓 Wenn man irgendwo auf das Feld klickt -> öffne Kalender
+  const dateInput = document.getElementById('dateInput');
+  dateInput.addEventListener('click', () => {
+    dateInput.showPicker(); // ruft den nativen Kalender auf
+  });
 </script>
 
 </body>
