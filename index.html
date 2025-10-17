@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- SEO Hauptinformationen -->
-  <title>Hundecoiffeur Horgen – Salon de Coiffure Pepita</title>
-  <meta name="description" content="Professioneller Hundecoiffeur in Horgen. Sanfte Fellpflege, Waschen, Schneiden & Föhnen mit Herz. Jetzt Termin bei Salon de Coiffure Pepita buchen!">
+  <title>Hundecoiffeur Horgen – Hundecoiffeur Pepita</title>
+  <meta name="description" content="Professioneller Hundecoiffeur in Horgen. Sanfte Fellpflege, Waschen, Schneiden & Föhnen mit Herz. Jetzt Termin bei Hundecoiffeur Pepita buchen!">
   <meta name="keywords" content="Hundecoiffeur, Hundesalon, Hundefriseur Zürich, Hundecoiffeur Horgen, Hundepflege Zürichsee, Pepita">
 
   <!-- Styles & Fonts -->
@@ -21,7 +21,7 @@
   <meta name="theme-color" content="#f97316">
 
   <!-- Open Graph (Social + Google) -->
-  <meta property="og:title" content="Salon de Coiffure Pepita – Hundecoiffeur Horgen">
+  <meta property="og:title" content="Hundecoiffeur Pepita – Hundecoiffeur Horgen">
   <meta property="og:description" content="Pflege mit Herz für Ihren Hund – Jetzt Termin buchen in Horgen.">
   <meta property="og:image" content="https://leonwwimmo.github.io/Hundefriseur_web/logo.jpg">
   <meta property="og:url" content="https://pepita-hundecoiffeur.ch/">
@@ -30,7 +30,7 @@
   <!-- Twitter Card (Social Media Vorschau) -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://leonwwimmo.github.io/Hundefriseur_web/logo.jpg">
-  <meta name="twitter:title" content="Salon de Coiffure Pepita – Hundecoiffeur Horgen">
+  <meta name="twitter:title" content="Hundecoiffeur Pepita – Hundecoiffeur Horgen">
   <meta name="twitter:description" content="Sanfte Pflege, Schneiden & Waschen für Hunde in Horgen.">
 </head>
 
@@ -41,7 +41,7 @@
   <div class="container header-inner">
     <a href="index.html" class="brand">
       <span class="logo">🐾</span>
-      <span class="brand-text">Salon&nbsp;de&nbsp;Coiffure&nbsp;Pepita</span>
+      <span class="brand-text">Hundecoiffeur&nbsp;Pepita</span>
     </a>
 
     <a href="index.html" class="center-logo">
@@ -67,7 +67,7 @@
     </div>
 
     <div class="container hero-inner">
-      <h1>Wir lieben Ihren Hund so sehr wie Sie</h1>
+      <h1>Wo jedes Bellen für Fürsorge und Liebe steht</h1>
       <p>Sanfte Pflege, modernes Equipment und viel Herz – für einen entspannten Coiffeur-Termin.</p>
       <div class="cta">
         <a class="btn ghost" href="#dienstleistungen">Leistungen ansehen</a>
@@ -131,59 +131,98 @@
       </div>
     </div>
   </section>
-  <!-- ZERTIFIKAT UND TEAM -->
-<section id="zertifikat" class="section" style="text-align:center;">
-  <div class="container">
-
+<!-- ZERTIFIKAT UND TEAM -->
+<section id="zertifikat" class="section" style="text-align:center; overflow-x:hidden;">
+  <div class="container" style="padding: 0;">
     <div style="
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
-      gap: 40px;
-      flex-wrap: wrap;
+      gap: 30px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 20px 40px; /* sorgt dafür, dass links & rechts Platz ist */
     ">
 
-      <!-- Linkes Bild: Hundereinigung -->
+      <!-- Bild 1 -->
       <img 
-        src="Pictures/Hundereinigung.png" 
-        alt="Hundereinigung im Salon de Coiffure Pepita"
+        src="Pictures/Hundvorher.png" 
+        alt="Hund vorher"
         style="
-          width: 300px;
-          height: 300px;
+          width: 250px;
+          height: 250px;
           border-radius: 20px;
           object-fit: cover;
+          flex-shrink: 0;
           box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          scroll-snap-align: center;
         "
       >
 
-      <!-- Mittig: Rundes Zertifikat -->
+      <!-- Bild 2 -->
+      <img 
+        src="Pictures/Hundnachschneiden.png" 
+        alt="Hund nach dem Schneiden"
+        style="
+          width: 250px;
+          height: 250px;
+          border-radius: 20px;
+          object-fit: cover;
+          flex-shrink: 0;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          scroll-snap-align: center;
+        "
+      >
+
+      <!-- Mitte: Zertifikat -->
       <img 
         src="Pictures/Zertifikat.png" 
         alt="Zertifikat Salon de Coiffure Pepita"
         style="
-          width: 300px;
-          height: 300px;
+          width: 250px;
+          height: 250px;
           border-radius: 50%;
           object-fit: cover;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          flex-shrink: 0;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+          scroll-snap-align: center;
         "
       >
 
-      <!-- Rechts: Face-Bild -->
+      <!-- Bild 4 -->
+      <img 
+        src="Pictures/Hundeschneiden.png" 
+        alt="Hund wird geschnitten"
+        style="
+          width: 250px;
+          height: 250px;
+          border-radius: 20px;
+          object-fit: cover;
+          flex-shrink: 0;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          scroll-snap-align: center;
+        "
+      >
+
+      <!-- Bild 5 -->
       <img 
         src="Pictures/face.png" 
         alt="Carmen Mandujano – zertifizierte Hundefriseurin"
         style="
-          width: 300px;
-          height: 300px;
+          width: 250px;
+          height: 250px;
           border-radius: 20px;
           object-fit: cover;
+          flex-shrink: 0;
           box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          scroll-snap-align: center;
         "
       >
     </div>
   </div>
 </section>
+
 
 
   
@@ -193,7 +232,7 @@
       <h2>Kontakt</h2>
       <div class="grid contact-grid">
         <div>
-          <p><strong>Salon de Coiffure Pepita</strong></p>
+          <p><strong>Hundecoiffeur Pepita</strong></p>
           <p><strong>Adresse</strong><br>Zugerstrasse 90<br>8810 Horgen</p>
           <p><strong>Öffnungszeiten</strong><br>Mo–Fr: 09:00–16:00</p>
           <p><strong>Telefon:</strong> <a href="tel:+41767740822">076 774 08 22</a><br>
