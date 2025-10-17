@@ -65,22 +65,19 @@
 <script>
   const PRICES = {
     "Ganzer-Service":    { "Klein": 80, "Mittel": 80, "Gross": 80 },
-    "Waschen & Föhnen": { "Klein": 55, "Mittel": 70, "Gross": 80 },
-    "Zusatzleistung":   { "Klein": 10, "Mittel": 25, "Gross": 40 }
+    "Waschen & Föhnen": { "Klein": 60, "Mittel": 60, "Gross": 60 },
+    "Zusatzleistung":   { "Klein": 80, "Mittel": 80, "Gross": 80 }
   };
 
-  // --- Automatische Vorauswahl aus URL ---
   const params = new URLSearchParams(window.location.search);
-  const preselected = decodeURIComponent(params.get("service") || "Ganzer-Service"); // decode & etc.
+  const preselected = decodeURIComponent(params.get("service") || "Ganzer-Service"); 
 
   const select = document.getElementById("serviceSelect");
   const currentDisplay = document.getElementById("currentService");
 
-  // Dropdown setzen + Anzeige aktualisieren
   select.value = preselected;
   currentDisplay.textContent = "Aktuell gewählter Service: " + preselected;
 
-  // Falls kein exakter Match (Sonderzeichen-Fehler), fallback auf ersten Eintrag
   if (!PRICES[select.value]) select.value = "Ganzer-Service";
 
   function go(size) {

@@ -104,7 +104,6 @@
 </main>
 
 <script>
-  // Werte aus URL übernehmen
   const p = new URLSearchParams(location.search);
   const service = decodeURIComponent(p.get('service') || 'Ganzer-Service');
   const size = p.get('size') || 'Klein';
@@ -112,17 +111,47 @@
 
   document.getElementById('service').value = service;
   document.getElementById('size').value = size;
-  document.getElementById('price').value = price + ' CHF';
+  document.getElementById('price').value = price + ' CHF / Std.';
   document.getElementById('sumService').textContent = 'Service: ' + service;
   document.getElementById('sumSize').textContent = 'Grösse: ' + size;
-  document.getElementById('sumPrice').textContent = 'Preis: ' + price + ' CHF';
+  document.getElementById('sumPrice').textContent = 'Preis: ' + price + ' CHF / Std.';
 
-  // 🗓 Wenn man irgendwo auf das Feld klickt -> öffne Kalender
   const dateInput = document.getElementById('dateInput');
-  dateInput.addEventListener('click', () => {
-    dateInput.showPicker(); // ruft den nativen Kalender auf
+  dateInput.addEventListener('click', () => dateInput.showPicker());
+
+  dateInput.addEventListener('input', () => {
+    const val = dateInput.value;
+    if (!val) return;
+
+    const time = val.split("T")[1];
+    if (!time) return;
+
+    const [hours, minutes] = time.split(":").map(Number);
+    if (hours < 9 || (hours === 16 && minutes > 0) || hours > 16) {
+      alert("Bitte eine Uhrzeit zwischen 09:00 und 16:00 Uhr wählen.");
+      dateInput.value = "";
+    }
   });
+
+  const phoneInput = document.querySelector('input[name="phone"]');
+
+  phoneInput.style.transition = 'color 0.25s ease';
+
+  function checkPhoneColor() {
+    const val = phoneInput.value.trim();
+    const cleaned = val.replace(/\s+/g, '');
+    const isValid = /^(\+41|0)\d{8,9}$/.test(cleaned);
+    phoneInput.style.color = isValid ? '#007bff' : '#000000';
+  }
+
+  phoneInput.addEventListener('input', checkPhoneColor);
+  window.addEventListener('load', checkPhoneColor);
+  setTimeout(checkPhoneColor, 500); 
 </script>
+
+
+
+
 
 </body>
 </html>
