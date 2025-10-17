@@ -10,7 +10,6 @@
 
 <header class="site-header">
   <div class="container header-inner">
-    
     <a href="index.html" class="brand">
       <span class="logo">🐾</span>
       <span class="brand-text">Salon&nbsp;de&nbsp;Coiffure&nbsp;Pepita</span>
@@ -48,10 +47,11 @@
 
 <script>
   const PRICES = {
-    "Ganzer-Service":    { "Klein": 59,  "Mittel": 79,  "Gross": 99  },
-    "Waschen & Föhnen": { "Klein": 89,  "Mittel": 109, "Gross": 139 },
-    "Zusatzleistung":  { "Klein": 10,  "Mittel": 25,  "Gross": 40  }
+    "Ganzer-Service":    { "Klein": 80,  "Mittel": 80,  "Gross": 80 },
+    "Waschen & Föhnen": { "Klein": 55,  "Mittel": 70,  "Gross": 80 },
+    "Zusatzleistung":   { "Klein": 10,  "Mittel": 25,  "Gross": 40 }
   };
+
   function go(size){
     const service = document.getElementById('serviceSelect').value;
     const price = PRICES[service][size];
