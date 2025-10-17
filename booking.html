@@ -56,47 +56,12 @@
       action="https://formsubmit.co/leon.neuhaus@gmx.net"
       method="POST">
 
-      <!-- Professionelles E-Mail-Template -->
+      <!-- FormSubmit Einstellungen -->
       <input type="hidden" name="_subject" value="🐾 Neue Termin-Anfrage – Salon de Coiffure Pepita">
       <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="custom">
+      <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_next" value="https://pepita-hundecoiffeur.ch/danke.html">
       <input type="hidden" name="_format" value="html">
-
-      <!-- Automatische Antwort an Kunden -->
-      <input type="hidden" name="_autoresponse" value="🐾 Vielen Dank für Ihre Anfrage beim Salon de Coiffure Pepita!
-Wir melden uns in Kürze mit einer Terminbestätigung.
-
-Herzliche Grüsse
-Ihr Pepita-Team – Hundecoiffeur Horgen">
-
-      <!-- HTML-Mail Layout -->
-      <input type="hidden" name="_body" value="
-        <div style='font-family:Inter,Arial,sans-serif; color:#222; background:#fff; padding:20px; border-radius:8px;'>
-          <h2 style='color:#f97316;'>🐾 Neue Termin-Anfrage</h2>
-          <p style='font-size:15px;'>Hallo Pepita-Team 🐶,<br><br>
-          Sie haben eine neue Termin-Anfrage erhalten:</p>
-
-          <table style='width:100%; border-collapse:collapse; margin:15px 0;'>
-            <tr><td style='padding:6px 0;'>🐾 <strong>Name:</strong></td><td>{{name}}</td></tr>
-            <tr><td style='padding:6px 0;'>📧 <strong>E-Mail:</strong></td><td>{{email}}</td></tr>
-            <tr><td style='padding:6px 0;'>📞 <strong>Telefon:</strong></td><td>{{phone}}</td></tr>
-            <tr><td style='padding:6px 0;'>🐕 <strong>Tier/Rasse:</strong></td><td>{{pet}}</td></tr>
-            <tr><td style='padding:6px 0;'>💇‍♀️ <strong>Service:</strong></td><td>{{service}}</td></tr>
-            <tr><td style='padding:6px 0;'>📏 <strong>Grösse:</strong></td><td>{{size}}</td></tr>
-            <tr><td style='padding:6px 0;'>💰 <strong>Preis:</strong></td><td>{{price}} CHF</td></tr>
-            <tr><td style='padding:6px 0;'>📅 <strong>Datum:</strong></td><td>{{date}}</td></tr>
-            <tr><td style='padding:6px 0;'>📝 <strong>Nachricht:</strong></td><td>{{message}}</td></tr>
-          </table>
-
-          <p style='margin-top:15px; font-size:14px; color:#555;'>
-            Antworten Sie direkt auf diese E-Mail, um den Kunden zu kontaktieren.<br><br>
-            <strong>Salon de Coiffure Pepita</strong><br>
-            Zugerstrasse 90, 8810 Horgen<br>
-            📞 076 774 08 22 | ✉️ coiffeur.pepita@gmail.com
-          </p>
-        </div>
-      ">
 
       <!-- Eingabefelder -->
       <div class="grid form-grid">
