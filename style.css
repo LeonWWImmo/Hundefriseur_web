@@ -163,3 +163,34 @@ input:focus,select:focus,textarea:focus{border-color:var(--brand);box-shadow:0 0
   max-width: 600px;
   margin: 0 auto;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@600&display=swap');
+
+
+
+.logo-wrapper {
+  background-color: #fff;         
+  border-radius: 50%;
+  width: 70px;                  
+  height: 82px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 14px;
+}
+
+.logo-wrapper img {
+  width: 150%;                    
+  height: 150%;
+  object-fit: contain;
+}
+
+
+.brand-text {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.2rem;
+  color: #f97316;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
