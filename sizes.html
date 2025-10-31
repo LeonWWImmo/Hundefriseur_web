@@ -70,7 +70,7 @@
   const PRICES = {
     "Ganzer-Service":    { "Klein": 80, "Mittel": 80, "Gross": 80 },
     "Waschen & Föhnen": { "Klein": 60, "Mittel": 60, "Gross": 60 },
-    "Zusatzleistung":   { "Klein": 80, "Mittel": 80, "Gross": 80 }
+    "Zusatzleistung":   { "Klein": 20, "Mittel": 20, "Gross": 20 }
   };
 
   const params = new URLSearchParams(window.location.search);
@@ -82,13 +82,16 @@
   select.value = preselected;
   currentDisplay.textContent = "Aktuell gewählter Service: " + preselected;
 
-  if (!PRICES[select.value]) select.value = "Ganzer-Service";
-
   function go(size) {
     const service = select.value;
     const price = PRICES[service][size];
-    window.location.href = `booking.html?service=${encodeURIComponent(service)}&size=${size}&price=${price}`;
+
+    const unit = service === "Zusatzleistung" ? "/ Je" : "/ Std.";
+
+    window.location.href = `booking.html?service=${encodeURIComponent(service)}&size=${size}&price=${price}&unit=${encodeURIComponent(unit)}`;
   }
+
+
 </script>
 
 </body>

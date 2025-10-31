@@ -112,13 +112,15 @@
   const service = decodeURIComponent(p.get('service') || 'Ganzer-Service');
   const size = p.get('size') || 'Klein';
   const price = p.get('price') || '–';
+  const unit = decodeURIComponent(p.get('unit') || '/ Std.');
 
   document.getElementById('service').value = service;
   document.getElementById('size').value = size;
-  document.getElementById('price').value = price + ' CHF / Std.';
+  document.getElementById('price').value = `${price} CHF ${unit}`;
   document.getElementById('sumService').textContent = 'Service: ' + service;
   document.getElementById('sumSize').textContent = 'Grösse: ' + size;
-  document.getElementById('sumPrice').textContent = 'Preis: ' + price + ' CHF / Std.';
+  document.getElementById('sumPrice').textContent = `Preis: ${price} CHF ${unit}`;
+
 
   const dateInput = document.getElementById('dateInput');
   dateInput.addEventListener('click', () => dateInput.showPicker());
