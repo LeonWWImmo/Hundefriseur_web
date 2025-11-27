@@ -194,3 +194,136 @@ input:focus,select:focus,textarea:focus{border-color:var(--brand);box-shadow:0 0
   font-weight: 400;
   letter-spacing: 0.5px;
 }
+/* === Fixierte Flyer oben rechts === */
+.flyer-fixed {
+  position: fixed;
+  top: 90px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+}
+
+.flyer-fixed img {
+  width: 160px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.flyer-fixed img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+/* === Popup Ansicht === */
+.flyer-popup {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+}
+
+.flyer-popup-content {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(255,255,255,0.3);
+}
+
+/* Schließen-X */
+.flyer-close {
+  position: absolute;
+  top: 25px;
+  right: 40px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.flyer-close:hover {
+  color: #f97316; /* orange Akzent */
+}
+
+/* Mobile Version */
+@media (max-width: 768px) {
+  .flyer-fixed {
+    top: auto;
+    bottom: 15px;
+    right: 10px;
+    flex-direction: row;
+    gap: 6px;
+  }
+  .flyer-fixed img {
+    width: 100px;
+  }
+}
+
+.flyer {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.popup {
+  width: 90%;
+  max-width: 400px;
+}
+.popup-img {
+  transform: scale(0.9);
+  transform-origin: top center;
+  width: 100%;
+  height: auto;
+}
+/* === Text + Pfeil über den Flyern === */
+.flyer-hinweis {
+  position: fixed;
+  top: 20px;          /* Abstand von oben (Desktop) */
+  right: 60px;
+  text-align: center;
+  z-index: 10000;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.flyer-hinweis span {
+  display: block;
+  font-weight: 600;
+  color: #f97316; /* Orange */
+  font-size: 1.1rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.flyer-hinweis img {
+  width: 80px;
+  transform: rotate(20deg);
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  margin-top: 4px;
+}
+
+/* Auf Mobile kleiner machen & etwas höher setzen */
+@media (max-width: 768px) {
+  .flyer-hinweis {
+    top: auto;
+    bottom: 170px; /* <-- war 110px, jetzt höher */
+    right: 30px;
+  }
+
+  .flyer-hinweis img {
+    width: 60px;
+  }
+
+  .flyer-hinweis span {
+    font-size: 0.9rem;
+  }
+}
