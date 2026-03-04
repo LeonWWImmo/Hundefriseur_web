@@ -1,0 +1,403 @@
+﻿.page {
+  background: #f8f7f5;
+  min-height: 100vh;
+  padding: 36px 0 54px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.leftCol,
+.rightCol {
+  display: grid;
+  gap: 16px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #f3e6d8;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(20, 20, 20, 0.04);
+  padding: 18px;
+}
+
+.cardHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+
+.cardHead h2,
+.calendarHeader h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.cardHead span {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.serviceTile {
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background: #fafaf9;
+  text-align: left;
+  padding: 12px;
+  display: grid;
+  gap: 2px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.serviceTile:hover {
+  border-color: #fdba74;
+}
+
+.serviceTileActive {
+  border-color: #f97316;
+  background: #fff7ed;
+}
+
+.serviceName {
+  font-weight: 800;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.serviceMeta {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.calendarHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 12px;
+}
+
+.calendarHeader p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.weekNav {
+  display: inline-flex;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.weekNav button {
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 6px 10px;
+  cursor: pointer;
+  color: #334155;
+}
+
+.weekNav button:hover {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.error,
+.success,
+.muted {
+  margin: 0 0 10px;
+  font-size: 13px;
+}
+
+.error {
+  color: #b00020;
+}
+
+.success {
+  color: #14532d;
+}
+
+.muted {
+  color: #64748b;
+}
+
+.weekGrid7,
+.slotColumns {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.mobileDays {
+  display: none;
+}
+
+.weekGrid7 {
+  margin-bottom: 8px;
+}
+
+.weekDayHead {
+  text-align: center;
+  padding-bottom: 6px;
+}
+
+.weekDayHead p {
+  margin: 0;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+  color: #94a3b8;
+}
+
+.weekDayHead strong {
+  font-size: 14px;
+}
+
+.slotColumn,
+.slotColumnDisabled {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.slotBtn {
+  border: 1px solid #fdba74;
+  background: #fff7ed;
+  border-radius: 10px;
+  min-height: 44px;
+  padding: 6px;
+  cursor: pointer;
+  display: grid;
+  gap: 2px;
+  text-align: center;
+}
+
+.slotBtn span {
+  font-size: 12px;
+  font-weight: 800;
+  color: #9a3412;
+}
+
+.slotBtn small {
+  font-size: 11px;
+  color: #c2410c;
+}
+
+.slotBtn:hover {
+  background: #ffedd5;
+}
+
+.slotBtnActive {
+  border-color: #f97316;
+  background: linear-gradient(180deg, #fdba74, #fb923c);
+}
+
+.slotBtnActive span,
+.slotBtnActive small {
+  color: #fff;
+}
+
+.slotBtnReserved {
+  border-color: #cbd5e1;
+  background: #f1f5f9;
+}
+
+.slotBtnReserved span,
+.slotBtnReserved small {
+  color: #64748b;
+}
+
+.slotBtn:disabled {
+  cursor: wait;
+}
+
+.slotEmpty {
+  min-height: 44px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+  font-size: 11px;
+  color: #94a3b8;
+  display: grid;
+  place-items: center;
+  background: #f8fafc;
+}
+
+.slotColumnDisabled .slotEmpty {
+  background: #f8fafc;
+  color: #cbd5e1;
+}
+
+.sticky {
+  position: sticky;
+  top: 18px;
+}
+
+.summaryTitle {
+  margin: 0 0 12px;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.summaryItem {
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  background: #fafaf9;
+  padding: 12px;
+  margin-bottom: 10px;
+  display: grid;
+  gap: 2px;
+}
+
+.summaryItem p {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #94a3b8;
+}
+
+.summaryItem strong {
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.summaryItem span {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.form {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.form label {
+  display: grid;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.form input,
+.form select,
+.form textarea {
+  width: 100%;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.form input:focus,
+.form textarea:focus {
+  outline: none;
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.16);
+}
+
+.confirmBtn {
+  margin-top: 6px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  color: #fff;
+  font-weight: 900;
+  padding: 13px 14px;
+  cursor: pointer;
+}
+
+.confirmBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1080px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sticky {
+    position: static;
+  }
+
+  .serviceGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .calendarHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .weekGrid7,
+  .slotColumns {
+    display: none;
+  }
+
+  .mobileDays {
+    display: grid;
+    gap: 10px;
+  }
+
+  .mobileDayCard {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #fff;
+    padding: 10px;
+  }
+
+  .mobileDayHead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .mobileDayHead p {
+    margin: 0;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 800;
+    color: #94a3b8;
+  }
+
+  .mobileDayHead strong {
+    font-size: 14px;
+  }
+
+  .mobileDaySlots {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+}
+
