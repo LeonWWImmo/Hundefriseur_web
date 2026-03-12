@@ -119,6 +119,28 @@ function normalizeServiceName(value: string) {
     .trim();
 }
 
+function getServicePriceLabel(service: Service) {
+  const normalized = normalizeServiceName(service.name);
+
+  if (normalized.includes("zusatzleistung")) {
+    return `CHF ${service.price_chf} / je Leistung`;
+  }
+
+  if (normalized.includes("waschen") || normalized.includes("fohnen")) {
+    return `ab CHF ${service.price_chf} / Std.`;
+  }
+
+  return `CHF ${service.price_chf} / Std.`;
+}
+
+function getServiceDisplayName(service: Service) {
+  const normalized = normalizeServiceName(service.name);
+  if (normalized === "ganzer service") {
+    return "Basis-Service";
+  }
+  return service.name;
+}
+
 function getWindowsForDay(isoDay: string): SlotWindow[] {
   const day = new Date(`${isoDay}T12:00:00`).getDay(); // 0=So, 1=Mo, ... 6=Sa
   if (day === 0) return [];
@@ -335,7 +357,7 @@ export default function NewBookingPage() {
         customerName: name,
         customerEmail: email,
         customerPhone: phone,
-        serviceName: selectedService?.name || "",
+        serviceName: selectedService ? getServiceDisplayName(selectedService) : "",
         serviceDurationMinutes: selectedService?.duration_minutes || 0,
         petName: dogName,
         dogSize,
@@ -430,9 +452,8 @@ export default function NewBookingPage() {
                         onClick={() => setServiceId(service.id)}
                         className={`${styles.serviceTile} ${active ? styles.serviceTileActive : ""}`.trim()}
                       >
-                        <span className={styles.serviceName}>{service.name}</span>
-                        <span className={styles.serviceMeta}>{service.duration_minutes} Min</span>
-                        <span className={styles.serviceMeta}>CHF {service.price_chf}</span>
+                        <span className={styles.serviceName}>{getServiceDisplayName(service)}</span>
+                        <span className={styles.serviceMeta}>{getServicePriceLabel(service)}</span>
                       </button>
                     );
                   })}
@@ -555,9 +576,11 @@ export default function NewBookingPage() {
 
               <div className={styles.summaryItem}>
                 <p>Service</p>
-                <strong>{selectedService?.name || "-"}</strong>
+                <strong>{selectedService ? getServiceDisplayName(selectedService) : "-"}</strong>
                 <span>
-                  {selectedService ? `${selectedService.duration_minutes} Min · CHF ${selectedService.price_chf}` : "Bitte links Service wählen"}
+                  {selectedService
+                    ? getServicePriceLabel(selectedService)
+                    : "Bitte links Service wählen"}
                 </span>
               </div>
 

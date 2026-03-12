@@ -155,7 +155,7 @@ export default function HomePage() {
                 </ul>
                 <div className="price">80 CHF / Std.</div>
                 <div className="actions">
-                  <Link className="btn" href="/sizes?service=Ganzer-Service">
+                  <Link className="btn" href="/sizes?service=Basis-Service">
                     Größe wählen
                   </Link>
                 </div>
@@ -300,7 +300,6 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-
       </main>
 
       <footer className="site-footer">
@@ -335,4 +334,3 @@ export default function HomePage() {
     </>
   );
 }
-

@@ -6,15 +6,22 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
 
 const PRICES: Record<string, Record<string, number>> = {
-  "Ganzer-Service": { Klein: 80, Mittel: 80, Gross: 80 },
+  "Basis-Service": { Klein: 80, Mittel: 80, Gross: 80 },
   "Waschen & Föhnen": { Klein: 60, Mittel: 60, Gross: 60 },
   Zusatzleistung: { Klein: 20, Mittel: 20, Gross: 20 },
 };
 
+function normalizeServiceName(value: string) {
+  if (value === "Ganzer-Service") return "Basis-Service";
+  return value;
+}
+
 function SizesContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const preselected = decodeURIComponent(searchParams.get("service") || "Ganzer-Service");
+  const preselected = normalizeServiceName(
+    decodeURIComponent(searchParams.get("service") || "Basis-Service"),
+  );
   const [service, setService] = useState(preselected);
 
   const currentService = useMemo(
@@ -61,8 +68,8 @@ function SizesContent() {
 
       <main className="section">
         <div className="container">
-          <h1>Grösse wählen</h1>
-          <p className="section-intro">Wähle Service und Hundegrösse.</p>
+          <h1>Größe wählen</h1>
+          <p className="section-intro">Wähle Service und Hundegröße.</p>
 
           <div id="currentService" style={{ fontWeight: 600, marginBottom: "10px" }}>
             {currentService}
@@ -71,7 +78,7 @@ function SizesContent() {
           <label>
             Service
             <select value={service} onChange={(event) => setService(event.target.value)}>
-              <option value="Ganzer-Service">Ganzer-Service</option>
+              <option value="Basis-Service">Basis-Service</option>
               <option value="Waschen & Föhnen">Waschen &amp; Föhnen</option>
               <option value="Zusatzleistung">Zusatzleistung</option>
             </select>
