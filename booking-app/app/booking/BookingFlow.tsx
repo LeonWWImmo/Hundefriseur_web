@@ -24,12 +24,6 @@ type DayItem = {
   dateLabel: string;
 };
 
-type SlotWindow = {
-  startHour: number;
-  startMinute: number;
-  endHour: number;
-};
-
 const TZ = "Europe/Zurich";
 
 const weekdayFmt = new Intl.DateTimeFormat("de-CH", { weekday: "short", timeZone: TZ });
@@ -51,12 +45,6 @@ const ymdFmt = new Intl.DateTimeFormat("en-CA", {
   year: "numeric",
   month: "2-digit",
   day: "2-digit",
-  timeZone: TZ,
-});
-const hmFmt = new Intl.DateTimeFormat("en-GB", {
-  hour: "2-digit",
-  minute: "2-digit",
-  hour12: false,
   timeZone: TZ,
 });
 
@@ -98,13 +86,6 @@ function buildWeek(weekStartIso: string): DayItem[] {
   });
 }
 
-function timeParts(ts: string) {
-  const parts = hmFmt.formatToParts(new Date(ts));
-  const hour = Number(parts.find((p) => p.type === "hour")?.value ?? "0");
-  const minute = Number(parts.find((p) => p.type === "minute")?.value ?? "0");
-  return { hour, minute };
-}
-
 function slotLabel(slot: Slot) {
   return `${timeFmt.format(new Date(slot.slot_start))} - ${timeFmt.format(new Date(slot.slot_end))}`;
 }
@@ -141,36 +122,8 @@ function getServiceDisplayName(service: Service) {
   return service.name;
 }
 
-function getWindowsForDay(isoDay: string): SlotWindow[] {
-  const day = new Date(`${isoDay}T12:00:00`).getDay(); // 0=So, 1=Mo, ... 6=Sa
-  if (day === 0) return [];
-  if (day === 1) return [{ startHour: 13, startMinute: 0, endHour: 16 }];
-  if (day === 6) return [{ startHour: 10, startMinute: 0, endHour: 14 }];
-  return [
-    { startHour: 9, startMinute: 0, endHour: 12 },
-    { startHour: 13, startMinute: 0, endHour: 16 },
-  ];
-}
-
 function dayOfWeek(isoDay: string) {
   return new Date(`${isoDay}T12:00:00`).getDay();
-}
-
-function pickSlotsPerDay(daySlots: Slot[], isoDay: string) {
-  const sorted = [...daySlots].sort(
-    (a, b) => new Date(a.slot_start).getTime() - new Date(b.slot_start).getTime(),
-  );
-  const windows = getWindowsForDay(isoDay);
-  const picked: Slot[] = [];
-
-  for (const window of windows) {
-    const fixedSlot = sorted.find((slot) => {
-      const { hour, minute } = timeParts(slot.slot_start);
-      return hour === window.startHour && minute === window.startMinute;
-    });
-    if (fixedSlot) picked.push(fixedSlot);
-  }
-  return picked;
 }
 
 function getOrCreateCustomerSessionId() {
@@ -493,13 +446,15 @@ export default function NewBookingPage() {
 
               <div className={styles.slotColumns}>
                 {weekDays.map((day) => {
-                  const daySlots = pickSlotsPerDay(slotsByDay[day.iso] || [], day.iso);
+                  const daySlots = [...(slotsByDay[day.iso] || [])].sort(
+                    (a, b) => new Date(a.slot_start).getTime() - new Date(b.slot_start).getTime(),
+                  );
                   const isSaturday = dayOfWeek(day.iso) === 6;
                   return (
                     <div key={day.iso} className={styles.slotColumn}>
                       {daySlots.length === 0 ? (
                         <div className={styles.slotEmpty}>
-                          {isSaturday ? "Sa 10:00-14:00 derzeit nicht verfügbar" : "Keine Slots"}
+                          {isSaturday ? "Kein Slot verfügbar" : "Keine Slots"}
                         </div>
                       ) : null}
                       {daySlots.map((slot) => {
@@ -527,7 +482,9 @@ export default function NewBookingPage() {
 
               <div className={styles.mobileDays}>
                 {weekDays.map((day) => {
-                  const daySlots = pickSlotsPerDay(slotsByDay[day.iso] || [], day.iso);
+                  const daySlots = [...(slotsByDay[day.iso] || [])].sort(
+                    (a, b) => new Date(a.slot_start).getTime() - new Date(b.slot_start).getTime(),
+                  );
                   const isSaturday = dayOfWeek(day.iso) === 6;
                   return (
                     <article key={`mobile-${day.iso}`} className={styles.mobileDayCard}>
@@ -539,7 +496,7 @@ export default function NewBookingPage() {
                       <div className={styles.mobileDaySlots}>
                         {daySlots.length === 0 ? (
                           <div className={styles.slotEmpty}>
-                            {isSaturday ? "Sa 10:00-14:00 derzeit nicht verfügbar" : "Keine Slots"}
+                            {isSaturday ? "Kein Slot verfügbar" : "Keine Slots"}
                           </div>
                         ) : null}
                         {daySlots.map((slot) => {
@@ -642,4 +599,3 @@ export default function NewBookingPage() {
     </>
   );
 }
-
