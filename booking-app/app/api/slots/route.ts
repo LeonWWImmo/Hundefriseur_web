@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSupabasePublic } from "@/lib/supabase";
+import { filterSlotsAgainstBlocks, loadBookingBlocksInRange } from "@/lib/booking-blocks";
 
 export const runtime = "nodejs";
 
@@ -11,6 +12,12 @@ function isUuid(value: string) {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
     value,
   );
+}
+
+function shiftIsoDate(isoDate: string, days: number) {
+  const date = new Date(`${isoDate}T12:00:00Z`);
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
 }
 
 export async function GET(request: Request) {
@@ -45,7 +52,12 @@ export async function GET(request: Request) {
     for (const args of variants) {
       const { data, error } = await supabase.rpc("get_available_slots", args);
       if (!error) {
-        return NextResponse.json({ slots: data ?? [] });
+        const slots = (data ?? []) as Array<{ slot_start: string; slot_end: string }>;
+        const rangeStart = `${shiftIsoDate(day, -1)}T00:00:00Z`;
+        const rangeEnd = `${shiftIsoDate(day, 2)}T00:00:00Z`;
+        const blocks = await loadBookingBlocksInRange({ rangeStart, rangeEnd });
+        const filteredSlots = filterSlotsAgainstBlocks(slots, blocks);
+        return NextResponse.json({ slots: filteredSlots });
       }
       lastErrorMessage = error.message;
     }

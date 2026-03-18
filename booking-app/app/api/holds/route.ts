@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
+import { hasBlockConflict, loadBookingBlocksInRange } from "@/lib/booking-blocks";
 
 export const runtime = "nodejs";
 
@@ -26,6 +27,10 @@ function normalizeRow(data: unknown) {
     return (data[0] ?? null) as Record<string, unknown> | null;
   }
   return (data ?? null) as Record<string, unknown> | null;
+}
+
+function toIsoDate(value: string) {
+  return new Date(value).toISOString().slice(0, 10);
 }
 
 export async function POST(request: Request) {
@@ -67,6 +72,45 @@ export async function POST(request: Request) {
     }
 
     const supabase = getSupabaseAdmin();
+    const slotDay = toIsoDate(slotStart);
+    const slotVariants = [
+      { p_service_id: serviceId, p_day: slotDay, p_tz: process.env.BOOKING_TIMEZONE || "Europe/Zurich" },
+      { service_id: serviceId, day: slotDay, tz: process.env.BOOKING_TIMEZONE || "Europe/Zurich" },
+    ];
+
+    let requestedSlot: { slot_start: string; slot_end: string } | null = null;
+    for (const args of slotVariants) {
+      const { data, error } = await supabase.rpc("get_available_slots", args);
+      if (error) continue;
+      requestedSlot =
+        ((data ?? []) as Array<{ slot_start: string; slot_end: string }>).find(
+          (item) => item.slot_start === slotStart,
+        ) ?? null;
+      if (requestedSlot) break;
+    }
+
+    const slotStartDate = new Date(slotStart);
+    const slotEndDate = requestedSlot
+      ? new Date(requestedSlot.slot_end)
+      : new Date(slotStartDate.getTime() + holdMinutes * 60_000);
+    const blocks = await loadBookingBlocksInRange({
+      rangeStart: slotStartDate.toISOString(),
+      rangeEnd: slotEndDate.toISOString(),
+    });
+
+    if (
+      hasBlockConflict({
+        slotStart: slotStartDate.toISOString(),
+        slotEnd: slotEndDate.toISOString(),
+        blocks,
+      })
+    ) {
+      return NextResponse.json(
+        { error: "Dieser Zeitraum ist fuer Admin gesperrt." },
+        { status: 409 },
+      );
+    }
+
     const { data, error } = await supabase.rpc("create_booking_hold", {
       p_service_id: serviceId,
       p_slot_start: slotStart,

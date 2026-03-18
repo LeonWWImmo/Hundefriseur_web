@@ -1,0 +1,407 @@
+.manager {
+  min-height: 100vh;
+  padding: 32px 20px 56px;
+  background:
+    radial-gradient(circle at top left, rgba(251, 146, 60, 0.18), transparent 32%),
+    linear-gradient(180deg, #fff 0%, #fff7ed 100%);
+}
+
+.controlsCard,
+.listCard {
+  max-width: 1180px;
+  margin: 0 auto 24px;
+  border: 1px solid #fed7aa;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.06);
+}
+
+.controlsCard {
+  padding: 28px;
+}
+
+.listCard {
+  padding: 24px 28px;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.toolbar h1 {
+  margin: 0;
+  font-size: 40px;
+}
+
+.kicker {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ea580c;
+}
+
+.toolbarActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.navBtn,
+.logoutBtn,
+.secondaryBtn,
+.primaryBtn,
+.deleteBtn {
+  border: 1px solid #fdba74;
+  background: #fff7ed;
+  color: #9a3412;
+  padding: 11px 14px;
+  border-radius: 14px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.logoutBtn {
+  background: #111827;
+  color: #fff;
+  border-color: #111827;
+}
+
+.primaryBtn {
+  background: linear-gradient(90deg, #f97316, #fb923c);
+  color: #fff;
+  border-color: transparent;
+}
+
+.deleteBtn {
+  align-self: center;
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #be123c;
+}
+
+.setupGrid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 20px;
+}
+
+.panel {
+  border: 1px solid #ffedd5;
+  border-radius: 22px;
+  padding: 20px;
+  background: #fff;
+}
+
+.panelHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.panelHead h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.panelHead p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.bulkActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.weekHeader {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.weekDayHead {
+  text-align: center;
+  padding: 8px 6px;
+  border-radius: 14px;
+  background: #fff7ed;
+  border: 1px solid #ffedd5;
+}
+
+.weekDayHead p {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #9ca3af;
+}
+
+.weekDayHead strong {
+  font-size: 14px;
+  color: #111827;
+}
+
+.calendarWeeks {
+  display: grid;
+  gap: 8px;
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.dayCell {
+  min-height: 128px;
+  border: 1px solid #fed7aa;
+  border-radius: 18px;
+  background: #fffaf5;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dayCellSelected {
+  border-color: #f97316;
+  box-shadow: inset 0 0 0 1px #f97316;
+}
+
+.dayCellMuted {
+  opacity: 0.45;
+}
+
+.dayCellUnavailable {
+  background: #f8fafc;
+  border-color: #e5e7eb;
+}
+
+.dayToggle {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+
+.dayToggle:disabled {
+  cursor: not-allowed;
+}
+
+.dayToggle span {
+  font-weight: 800;
+  color: #111827;
+}
+
+.dayToggle small {
+  color: #9a3412;
+  font-size: 12px;
+}
+
+.dayDateInline {
+  display: block;
+  margin-bottom: 2px;
+  color: #9ca3af;
+}
+
+.slotPills {
+  display: grid;
+  gap: 6px;
+}
+
+.slotEmpty {
+  padding: 10px;
+  border-radius: 12px;
+  background: #f8fafc;
+  color: #9ca3af;
+  font-size: 13px;
+  text-align: center;
+}
+
+.slotPill {
+  width: 100%;
+  border: 1px solid #fdba74;
+  background: #fff;
+  color: #9a3412;
+  padding: 8px 10px;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+}
+
+.slotPillSelected {
+  background: linear-gradient(90deg, #fb923c, #f97316);
+  border-color: #f97316;
+  color: #fff;
+}
+
+.slotPill:disabled {
+  cursor: not-allowed;
+  background: #e5e7eb;
+  border-color: #d1d5db;
+  color: #9ca3af;
+}
+
+.selectionSummary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.summaryBox {
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid #ffedd5;
+  background: #fffaf5;
+}
+
+.summaryBox strong {
+  display: block;
+  font-size: 28px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.summaryBox span {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+  font-weight: 700;
+}
+
+.panel input,
+.panel textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid #fed7aa;
+  background: #fff;
+  font: inherit;
+}
+
+.actionStack {
+  display: grid;
+  gap: 10px;
+}
+
+.error,
+.success,
+.emptyState {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+}
+
+.error {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #be123c;
+}
+
+.success {
+  background: #ecfdf5;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+}
+
+.emptyState {
+  background: #fffaf5;
+  border: 1px dashed #fdba74;
+  color: #9a3412;
+}
+
+.blockList {
+  display: grid;
+  gap: 12px;
+}
+
+.blockItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 18px;
+  border: 1px solid #ffedd5;
+  border-radius: 18px;
+  background: #fff;
+}
+
+.blockItem strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.blockItem p,
+.blockItem small {
+  margin: 0;
+  color: #6b7280;
+}
+
+@media (max-width: 980px) {
+  .setupGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar {
+    flex-direction: column;
+  }
+
+  .toolbarActions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 700px) {
+  .controlsCard,
+  .listCard {
+    border-radius: 20px;
+  }
+
+  .controlsCard,
+  .listCard,
+  .panel {
+    padding: 18px;
+  }
+
+  .calendarGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .weekHeader {
+    display: none;
+  }
+
+  .selectionSummary {
+    grid-template-columns: 1fr;
+  }
+
+  .blockItem {
+    flex-direction: column;
+  }
+}
