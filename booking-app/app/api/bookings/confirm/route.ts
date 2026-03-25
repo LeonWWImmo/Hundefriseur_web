@@ -63,6 +63,77 @@ function toIcsUtc(date: Date) {
   return `${y}${m}${d}T${hh}${mm}${ss}Z`;
 }
 
+function getBookingReminderId(booking: Record<string, unknown>, fallbackHoldId: string) {
+  const candidates = [
+    booking.booking_id,
+    booking.id,
+    booking.hold_id,
+    booking.slot_hold_id,
+    fallbackHoldId,
+  ];
+
+  for (const candidate of candidates) {
+    const value = String(candidate ?? "").trim();
+    if (value) return value;
+  }
+
+  return fallbackHoldId;
+}
+
+async function upsertBookingReminder(args: {
+  holdId: string;
+  customerEmail: string;
+  customerPhone: string;
+  serviceName: string;
+  petName: string;
+  appointmentAt: string;
+  booking: Record<string, unknown>;
+}) {
+  const appointmentIso = String(
+    args.booking.starts_at ??
+      args.booking.start_at ??
+      args.booking.slot_start ??
+      args.appointmentAt ??
+      "",
+  ).trim();
+
+  if (!appointmentIso) {
+    return {
+      queued: false as const,
+      reason: "Missing appointment time for reminder queue.",
+    };
+  }
+
+  const supabase = getSupabaseAdmin();
+  const bookingId = getBookingReminderId(args.booking, args.holdId);
+
+  const { error } = await supabase.from("booking_reminders").upsert(
+    {
+      booking_id: bookingId,
+      customer_email: args.customerEmail,
+      customer_phone: args.customerPhone || null,
+      pet_name: args.petName || null,
+      service_name: args.serviceName || null,
+      appointment_at: appointmentIso,
+      sent_at: null,
+      resend_message_id: null,
+      last_error: null,
+    },
+    {
+      onConflict: "booking_id",
+    },
+  );
+
+  if (error) {
+    return {
+      queued: false as const,
+      reason: error.message,
+    };
+  }
+
+  return { queued: true as const };
+}
+
 async function sendAdminNotificationMail(args: {
   customerName: string;
   customerEmail: string;
@@ -352,6 +423,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Confirm RPC returned no data." }, { status: 500 });
     }
 
+    const reminderResult = await upsertBookingReminder({
+      holdId,
+      customerEmail,
+      customerPhone,
+      serviceName,
+      petName,
+      appointmentAt,
+      booking,
+    }).catch((error) => ({
+      queued: false as const,
+      reason: (error as Error).message,
+    }));
+
     const mailResult = await sendAdminNotificationMail({
       customerName,
       customerEmail,
@@ -372,6 +456,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       booking,
+      reminderQueued: reminderResult.queued,
+      reminderQueueError: reminderResult.queued ? null : reminderResult.reason,
       notifyMailSent: mailResult.sent,
       notifyMailError: mailResult.sent ? null : mailResult.reason,
       notifyMailTo: (process.env.ADMIN_NOTIFY_EMAIL || "leon.neuhaus@edu.tbz.ch").trim(),
