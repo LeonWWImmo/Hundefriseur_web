@@ -348,6 +348,119 @@ async function sendAdminNotificationMail(args: {
   return { sent: true as const };
 }
 
+async function sendCustomerConfirmationMail(args: {
+  customerEmail: string;
+  customerName: string;
+  customerPhone: string;
+  serviceName: string;
+  petName: string;
+  appointmentAt: string;
+  booking: Record<string, unknown>;
+}) {
+  const apiKey = (process.env.RESEND_API_KEY || "").trim();
+  const from = (process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev").trim();
+  const contactEmail = (process.env.REMINDER_CONTACT_EMAIL || "coiffeur.pepita@gmail.com").trim();
+  const contactPhone = (process.env.REMINDER_CONTACT_PHONE || "076 774 08 22").trim();
+  const address = (
+    process.env.REMINDER_ADDRESS || "Zugerstrasse 90, 8810 Horgen"
+  ).trim();
+
+  if (!apiKey) {
+    return {
+      sent: false as const,
+      reason: "Missing RESEND_API_KEY environment variable.",
+    };
+  }
+
+  const appointmentIso = String(
+    args.booking.starts_at ??
+      args.booking.start_at ??
+      args.booking.slot_start ??
+      args.appointmentAt ??
+      "",
+  ).trim();
+  const appointmentDate = new Date(appointmentIso || args.appointmentAt);
+
+  const dateLabel = !Number.isNaN(appointmentDate.getTime())
+    ? new Intl.DateTimeFormat("de-CH", {
+        weekday: "long",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        timeZone: "Europe/Zurich",
+      }).format(appointmentDate)
+    : "-";
+
+  const timeLabel = !Number.isNaN(appointmentDate.getTime())
+    ? new Intl.DateTimeFormat("de-CH", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+        timeZone: "Europe/Zurich",
+      }).format(appointmentDate)
+    : "-";
+
+  const serviceSafe = args.serviceName || "-";
+  const petSafe = args.petName || "-";
+
+  const html = `
+  <div style="font-family:Arial,sans-serif;background:#f8f7f5;padding:20px;color:#111827;">
+    <div style="max-width:560px;margin:0 auto;background:#ffffff;border:1px solid #f3e6d8;border-radius:14px;overflow:hidden;">
+      <div style="background:linear-gradient(90deg,#f97316,#fb923c);padding:16px 20px;color:#ffffff;">
+        <h1 style="margin:0;font-size:20px;">Ihre Buchung wurde eingetragen</h1>
+      </div>
+      <div style="padding:20px;">
+        <p style="margin-top:0;">Dies ist eine automatisch generierte E-Mail.</p>
+        <p>Ihre Buchung wurde erfolgreich in unserem System eingetragen.</p>
+        <p>Bei Fragen oder falls Sie den Termin nicht wahrnehmen können, melden Sie sich bitte bei ${escapeHtml(contactEmail)} oder ${escapeHtml(contactPhone)}.</p>
+        <table style="width:100%;border-collapse:collapse;">
+          <tr><td style="padding:8px 0;color:#6b7280;">Datum</td><td style="padding:8px 0;font-weight:700;">${escapeHtml(dateLabel)}</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280;">Uhrzeit</td><td style="padding:8px 0;font-weight:700;">${escapeHtml(timeLabel)}</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280;">Service</td><td style="padding:8px 0;font-weight:700;">${escapeHtml(serviceSafe)}</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280;">Hundename</td><td style="padding:8px 0;font-weight:700;">${escapeHtml(petSafe)}</td></tr>
+          <tr><td style="padding:8px 0;color:#6b7280;">Adresse</td><td style="padding:8px 0;font-weight:700;">${escapeHtml(address)}</td></tr>
+        </table>
+        <p style="margin-bottom:0;">Freundliche Grüsse<br />Hundecoiffeur Pepita</p>
+      </div>
+    </div>
+  </div>`;
+
+  const text = [
+    "Dies ist eine automatisch generierte E-Mail.",
+    "",
+    "Ihre Buchung wurde erfolgreich in unserem System eingetragen.",
+    "",
+    `Datum: ${dateLabel}`,
+    `Uhrzeit: ${timeLabel}`,
+    `Service: ${serviceSafe}`,
+    `Hundename: ${petSafe}`,
+    `Adresse: ${address}`,
+    "",
+    `Bei Fragen oder falls Sie den Termin nicht wahrnehmen können, melden Sie sich bitte bei ${contactEmail} oder ${contactPhone}.`,
+    "",
+    "Freundliche Grüsse",
+    "Hundecoiffeur Pepita",
+  ].join("\n");
+
+  const resend = new Resend(apiKey);
+  const { error } = await resend.emails.send({
+    from,
+    to: [args.customerEmail],
+    subject: "Ihre Buchung bei Hundecoiffeur Pepita",
+    html,
+    text,
+  });
+
+  if (error) {
+    return {
+      sent: false as const,
+      reason: `Resend error: ${error.message}`,
+    };
+  }
+
+  return { sent: true as const };
+}
+
 export async function POST(request: Request) {
   try {
     const payload = (await request.json()) as ConfirmBody;
@@ -454,6 +567,19 @@ export async function POST(request: Request) {
       reason: (error as Error).message,
     }));
 
+    const customerMailResult = await sendCustomerConfirmationMail({
+      customerEmail,
+      customerName,
+      customerPhone,
+      serviceName,
+      petName,
+      appointmentAt,
+      booking,
+    }).catch((error) => ({
+      sent: false as const,
+      reason: (error as Error).message,
+    }));
+
     return NextResponse.json({
       booking,
       reminderQueued: reminderResult.queued,
@@ -461,6 +587,8 @@ export async function POST(request: Request) {
       notifyMailSent: mailResult.sent,
       notifyMailError: mailResult.sent ? null : mailResult.reason,
       notifyMailTo: (process.env.ADMIN_NOTIFY_EMAIL || "leon.neuhaus@edu.tbz.ch").trim(),
+      customerMailSent: customerMailResult.sent,
+      customerMailError: customerMailResult.sent ? null : customerMailResult.reason,
     });
   } catch (error) {
     return NextResponse.json(
