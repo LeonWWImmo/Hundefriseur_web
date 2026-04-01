@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import AdminMenu from "../_components/AdminMenu";
 import styles from "./page.module.css";
 
 type BookingBlock = {
@@ -299,7 +300,10 @@ export default function AdminCalendarManager() {
     setSelectedSlots({});
   }
 
-  async function createBlocksFromRanges(ranges: Array<{ startsAt: string; endsAt: string }>, successText: string) {
+  async function createBlocksFromRanges(
+    ranges: Array<{ startsAt: string; endsAt: string }>,
+    successText: string,
+  ) {
     if (ranges.length === 0) {
       setError("Bitte zuerst Tage oder Slots auswählen.");
       return;
@@ -390,11 +394,7 @@ export default function AdminCalendarManager() {
           </div>
 
           <div className={styles.toolbarActions}>
-            <form action="/api/admin/logout" method="post">
-              <button type="submit" className={styles.logoutBtn}>
-                Logout
-              </button>
-            </form>
+            <AdminMenu currentPath="/admin/kalender" />
           </div>
         </div>
 
@@ -452,9 +452,7 @@ export default function AdminCalendarManager() {
                     </button>
 
                     <div className={styles.slotPills}>
-                      {daySlots.length === 0 ? (
-                        <div className={styles.slotEmpty}>Keine Slots</div>
-                      ) : null}
+                      {daySlots.length === 0 ? <div className={styles.slotEmpty}>Keine Slots</div> : null}
                       {daySlots.map((slot) => {
                         const selected = selectedSlotSet.has(slot.slot_start);
                         return (
@@ -508,7 +506,12 @@ export default function AdminCalendarManager() {
             </label>
 
             <div className={styles.actionStack}>
-              <button type="button" className={styles.primaryBtn} onClick={() => void blockSelection()} disabled={saving}>
+              <button
+                type="button"
+                className={styles.primaryBtn}
+                onClick={() => void blockSelection()}
+                disabled={saving}
+              >
                 {saving ? "Speichere..." : "Auswahl sperren"}
               </button>
             </div>

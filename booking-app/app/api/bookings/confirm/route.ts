@@ -64,13 +64,7 @@ function toIcsUtc(date: Date) {
 }
 
 function getBookingReminderId(booking: Record<string, unknown>, fallbackHoldId: string) {
-  const candidates = [
-    booking.booking_id,
-    booking.id,
-    booking.hold_id,
-    booking.slot_hold_id,
-    fallbackHoldId,
-  ];
+  const candidates = [booking.id, booking.booking_id, booking.hold_id, booking.slot_hold_id, fallbackHoldId];
 
   for (const candidate of candidates) {
     const value = String(candidate ?? "").trim();
@@ -78,6 +72,42 @@ function getBookingReminderId(booking: Record<string, unknown>, fallbackHoldId: 
   }
 
   return fallbackHoldId;
+}
+
+async function resolveBookingRowId(args: {
+  appointmentIso: string;
+  customerEmail: string;
+  customerPhone: string;
+  petName: string;
+  fallbackId: string;
+}) {
+  const supabase = getSupabaseAdmin();
+  const query = supabase
+    .from("bookings")
+    .select("id")
+    .eq("starts_at", args.appointmentIso)
+    .eq("customer_email", args.customerEmail)
+    .eq("customer_phone", args.customerPhone)
+    .order("created_at", { ascending: false })
+    .limit(5);
+
+  const petName = args.petName.trim();
+  const { data, error } = petName
+    ? await query.eq("pet_name", petName)
+    : await query.is("pet_name", null);
+
+  if (error) {
+    return {
+      id: args.fallbackId,
+      error: error.message,
+    };
+  }
+
+  const resolvedId = String(data?.[0]?.id ?? "").trim();
+  return {
+    id: resolvedId || args.fallbackId,
+    error: null,
+  };
 }
 
 async function upsertBookingReminder(args: {
@@ -104,8 +134,17 @@ async function upsertBookingReminder(args: {
     };
   }
 
+  const fallbackId = getBookingReminderId(args.booking, args.holdId);
+  const resolvedBooking = await resolveBookingRowId({
+    appointmentIso,
+    customerEmail: args.customerEmail,
+    customerPhone: args.customerPhone,
+    petName: args.petName,
+    fallbackId,
+  });
+
   const supabase = getSupabaseAdmin();
-  const bookingId = getBookingReminderId(args.booking, args.holdId);
+  const bookingId = resolvedBooking.id;
 
   const { error } = await supabase.from("booking_reminders").upsert(
     {
@@ -131,7 +170,14 @@ async function upsertBookingReminder(args: {
     };
   }
 
-  return { queued: true as const };
+  if (resolvedBooking.error) {
+    return {
+      queued: true as const,
+      reason: `Reminder queued with fallback booking id: ${resolvedBooking.error}`,
+    };
+  }
+
+  return { queued: true as const, reason: null };
 }
 
 async function sendAdminNotificationMail(args: {
@@ -583,7 +629,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       booking,
       reminderQueued: reminderResult.queued,
-      reminderQueueError: reminderResult.queued ? null : reminderResult.reason,
+      reminderQueueError: reminderResult.reason,
       notifyMailSent: mailResult.sent,
       notifyMailError: mailResult.sent ? null : mailResult.reason,
       notifyMailTo: (process.env.ADMIN_NOTIFY_EMAIL || "leon.neuhaus@edu.tbz.ch").trim(),

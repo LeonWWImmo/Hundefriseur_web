@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
 import Image from "next/image";
-import FlyerWidget from "./components/FlyerWidget";
+// import FlyerWidget from "./components/FlyerWidget";
 
 export const metadata: Metadata = {
   title: "Hundecoiffeur Pepita in Horgen | Hundefriseur",
@@ -99,7 +99,7 @@ export default function HomePage() {
           </nav>
         </div>
       </header>
-      <FlyerWidget />
+      {/* <FlyerWidget /> */}
 
       <main>
         <section className="hero hero-double">

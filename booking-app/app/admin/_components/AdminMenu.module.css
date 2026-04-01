@@ -1,0 +1,71 @@
+.menuWrap {
+  position: relative;
+}
+
+.burgerBtn {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  border: 0;
+  background: transparent;
+  color: #111827;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.burgerLines {
+  display: grid;
+  gap: 5px;
+}
+
+.burgerLines span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.menuPanel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 220px;
+  padding: 10px;
+  border: 1px solid #fed7aa;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+  z-index: 30;
+  display: grid;
+  gap: 8px;
+}
+
+.menuLink,
+.menuLogout {
+  width: 100%;
+  border: 1px solid #ffedd5;
+  background: #fffaf5;
+  color: #9a3412;
+  border-radius: 12px;
+  padding: 12px 14px;
+  text-align: left;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.menuLinkActive {
+  background: linear-gradient(90deg, #fb923c, #f97316);
+  border-color: transparent;
+  color: #fff;
+}
+
+.menuLogout {
+  background: #111827;
+  border-color: #111827;
+  color: #fff;
+}
